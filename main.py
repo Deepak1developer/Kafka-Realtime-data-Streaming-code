@@ -1,18 +1,3 @@
-# how to start the code
-# 1.use the above command to start the kafka server.
-#  bin/kafka-server-start.sh config/server.properties
-# 2. Start the zookeeper.
-# bin/zookeeper-server-start.sh config/zookeeper.properties
-# 3. To look for all the kafka topic logs use this command
-# bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
-# 4. command to create a kafka topic.
-# bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
-# 5. List all the kafka topic.
-# bin/kafka-topics.sh --list --zookeeper 10.148.41.13:9092
-# cxln1.c.thelab-240901.internal:localhost:9092
-
-
-# Import KafkaProducer from Kafka library
 import sys
 import time
 
@@ -25,7 +10,7 @@ from datetime import datetime
 def kafka_producer():
     # Initialize producer variable and set parameter for JSON encode
     producer = KafkaProducer(bootstrap_servers='localhost:9092',
-                             api_version=(0, 11, 5))
+                             api_version=(0, 10))
 
     # Send data in JSON format
     file_location = "/home/nineleaps/Downloads/people.json"
@@ -65,21 +50,6 @@ def kafka_consumer():
                                              message.value))
 
     return print("Received Message")
-
-    # consume earliest available messages, don't commit offsets
-    # KafkaConsumer(auto_offset_reset='earliest', enable_auto_commit=False)
-
-    # consume json messages
-    # KafkaConsumer(value_deserializer=lambda m: json.loads(m.decode('ascii')))
-
-    # StopIteration if no message after 1sec
-    # KafkaConsumer(consumer_timeout_ms=1000)
-
-    # Subscribe to a regex topic pattern
-    # consumer = KafkaConsumer()
-    # consumer.subscribe(pattern='%test%')
-    # sys.exit()
-
 
 if __name__ == '__main__':
     kafka_producer()
